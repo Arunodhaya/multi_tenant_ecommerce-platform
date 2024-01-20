@@ -1,36 +1,41 @@
-import { Table, Column, Model, HasMany, CreatedAt, UpdatedAt, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
-import { sequelize } from './db-config';
+import {
+  Table,
+  Column,
+  Model,
+  HasMany,
+  CreatedAt,
+  UpdatedAt,
+  PrimaryKey,
+  AutoIncrement,
+} from "sequelize-typescript";
+import { sequelize } from "./db-config";
 
 @Table({
-    tableName: 'users'
+  tableName: "users",
 })
 export class UserModel extends Model {
-    @PrimaryKey
-    @AutoIncrement
-    @Column
-    id: number;
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  user_id: number;
 
-    @Column
-    firstName: String;
+  @Column
+  name: string;
 
-    @Column
-    lastName: String;
+  @Column
+  phone: string;
 
-    @Column
-    email: String;
+  @Column
+  email: string;
 
-    @Column
-    password: String;
+  @Column
+  password: string;
 
-    @Column
-    isAdmin: Boolean
+  @CreatedAt
+  createdAt: Date;
 
-    @CreatedAt
-    createdAt: Date;
-
-    @UpdatedAt
-    updatedAt: Date;
-
+  @UpdatedAt
+  updatedAt: Date;
 }
 
-sequelize.addModels([UserModel])
+sequelize.addModels([UserModel]);
