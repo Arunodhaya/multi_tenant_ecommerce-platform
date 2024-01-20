@@ -1,0 +1,11 @@
+{
+  "name": "multi-tenant-e-commerce-api",
+  "version": "1.0.0",
+  "description": "Multi-Tenant E-commerce platform that serves multiple independent online stores",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
