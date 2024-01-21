@@ -34,6 +34,25 @@ This is a Node.js application that provides multi-tenant e-commerce platform tha
    ```bash
     yarn start
 
+## API Documentation
+
+Please refer to the [API documentation](https://github.com/Arunodhaya/multi_tenant_ecommerce-platform/blob/master/api_docs.md) for detailed information on the available endpoints and their usage.
+
+## Postman Dump
+
+To quickly verify and test the endpoints, you can import the Postman dump available in the [Postman Dump directory](https://github.com/Arunodhaya/multi_tenant_ecommerce-platform/tree/master/postman_dump).
+
+## Login Credentials
+   A sample admin user will be created during migration. Use this credentials to easily verify endpoints in postman. 
+   - Import the postman dump and login using below credentials
+   - Import the postman environment variables and update the ADMIN_TOKEN variable with token you got has response in the above login request
+   - Now you can easily able to verify all admin routes
+   ```bash 
+   email:admin@admin.com
+   password:admin@123 
+   ```
+
+
 ## Database Schema
 1. Users Table:
    - user_id (Primary Key)
@@ -114,11 +133,3 @@ This is a Node.js application that provides multi-tenant e-commerce platform tha
    - store_id (Foreign Key referencing Store)
    - createdAt
    - updatedAt
-
-## API Documentation
-
-Please refer to the [API documentation](https://github.com/Arunodhaya/multi_tenant_ecommerce-platform/blob/master/api_docs.md) for detailed information on the available endpoints and their usage.
-
-## Postman Dump
-
-To quickly verify and test the endpoints, you can import the Postman dump available in the [Postman Dump directory](https://github.com/Arunodhaya/multi_tenant_ecommerce-platform/tree/master/postman_dump).
