@@ -1,18 +1,14 @@
 # API Documentation
 
 ## Customer Registration
----
-### Endpoint
-`POST /customer/auth/register`
 
----
+`POST /customer/auth/register`
 
 ### Request Headers
 
 - `store_id: 1`
 - `Content-Type: application/json`
 
----
 
 ### Request Body
 
@@ -40,22 +36,18 @@ Success (200 OK)
   }
 }
 ```
+---
 ## Customer Login
 
----
 
-### Endpoint
 
 `POST /customer/auth/login`
-
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Content-Type: application/json`
 
----
 
 ### Request Body
 
@@ -73,23 +65,21 @@ Success (200 OK)
 }
 
 ```
-## Update Customer Information
-
 ---
 
-### Endpoint
+## Update Customer Information
+
+
+
 
 `PUT /customer/auth/{customer_id}`
 
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Content-Type: application/json`
 - `Authorization: Bearer {JWT_token}`
-
----
 
 ### Request Body
 You can give any field of customer in the body it will get updated
@@ -115,30 +105,24 @@ Success (200 OK)
   }
 }
 ```
+---
 
 ## Create Customer Order
 An order will be created with DRAFT state
 
----
 
-### Endpoint
+
 
 `POST /customer/orders`
-
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Authorization: Bearer {JWT_token}`
 
----
-
 ### Request Body
 
 The request body is empty.
-
----
 
 ### Response
 
@@ -154,24 +138,17 @@ The request body is empty.
   "createdAt": "2024-01-21T19:45:50.945Z"
 }
 ```
+---
 ## Add Item to Customer Order
 Adds items to the cart of given order_id.
 
----
-
-### Endpoint
-
 `POST /customer/orders/{order_id}/items`
-
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Content-Type: application/json`
 - `Authorization: Bearer {JWT_token}`
-
----
 
 ### Request Body
 
@@ -196,23 +173,17 @@ Adds items to the cart of given order_id.
     "updatedAt": "2024-01-21T19:52:00.000Z"
 }
 ```
+---
+
 ## Remove Item from Customer Order
 Removes given item from the cart of given order_id.
 
----
-
-### Endpoint
-
 `DELETE /customer/orders/{order_id}/items/{order_item_id}`
-
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Authorization: Bearer {JWT_token}`
-
----
 
 ### Response
 
@@ -223,23 +194,17 @@ Removes given item from the cart of given order_id.
   "message": "Order item removed successfully"
 }
 ```
+---
 ## Get Customer Order Details
 Retrieves order and its order items
 
----
-
-### Endpoint
-
 `GET /customer/orders/{order_id}`
 
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Authorization: Bearer {JWT_token}`
-
----
 
 ### Response
 
@@ -283,24 +248,18 @@ Retrieves order and its order items
 }
 ```
 
+---
 ## Get Customer Orders
 Retrieves all orders of the logged in customer
 
 
----
-
-### Endpoint
-
 `GET /customer/orders`
-
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Authorization: Bearer {JWT_token}`
 
----
 
 ### Response
 
@@ -330,30 +289,18 @@ Retrieves all orders of the logged in customer
   }
 ]
 ```
+---
 
 ## Place Customer Order
 Completes the order and manages inventory
-- Iterates through order items, calculates the total order cost, and checks the available stock for each product.
-- If the stock is insufficient for any product, a response with an appropriate message is sent.
-- Then updates the order status to "COMPLETED" and sets the order date to the current date and time.
-- Once the status is updated, iterates through order items again and deducts the purchased quantities from the product inventory.
-- No payments will be handled
-
-
----
-
-### Endpoint
 
 `PUT /customer/orders/{order_id}/place`
 
----
 
 ### Request Headers
 
 - `store_id: 1`
 - `Authorization: Bearer {JWT_token}`
-
----
 
 ### Response
 
