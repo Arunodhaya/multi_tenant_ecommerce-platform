@@ -1,17 +1,14 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import { UserModel } from "../model/UserModel";
-import { authenticateToken } from "../middleware";
-import { generateToken } from "../helpers/authHelper";
-import { UserRolesModel } from "../model/UserRolesModel";
-import { RoleModel } from "../model/RoleModel";
-import { StoreModel } from "../model/StoreModel";
+import { validateAuthToken } from "../middleware";
+import { generateAdminToken } from "../helpers/authHelper";
 
 const app = express.Router();
 
 app.post("/register", async (req, res) => {
   try {
-    const { name, phone, email, password, store_id } = req.body;
+    const { name, phone, email, password } = req.body;
 
     if (!name || !email || !password) {
       return res
@@ -21,7 +18,9 @@ app.post("/register", async (req, res) => {
 
     const existingUser = await UserModel.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: 'User with this email already exists' });
+      return res
+        .status(400)
+        .json({ error: "User with this email already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,21 +31,6 @@ app.post("/register", async (req, res) => {
       email,
       password: hashedPassword,
     });
-
-    if (store_id) {
-        const store = await StoreModel.findByPk(store_id);
-        if (!store) {
-            return res.status(400).json({ error: 'Store not found.' });
-          }
-        const customerRole = await RoleModel.findOne({ where: { role_name: 'CUSTOMER' } });
-        await UserRolesModel.create({
-          user_id: user.user_id,
-          role_id: customerRole.role_id,  
-          store_id: store.store_id,
-        });
-      }
-  
-
     res.status(201).json({ user });
   } catch (error) {
     console.error(error);
@@ -73,7 +57,7 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid password." });
     }
 
-    const token = generateToken(user)
+    const token = generateAdminToken(user);
 
     res.json({ token });
   } catch (error) {
@@ -82,7 +66,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/user_info", authenticateToken, async (req, res) => {
+app.get("/user_info", validateAuthToken, async (req, res) => {
   try {
     const userId = req.body.user.user_id;
 
