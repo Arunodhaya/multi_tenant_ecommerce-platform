@@ -8,7 +8,6 @@ const app = express.Router();
 
 app.use(validateCustomer);
 
-//
 app.post("/", async (req, res) => {
   const { store_id } = res.locals.store;
   const { customer_id } = res.locals.customer;
@@ -162,6 +161,17 @@ app.post("/:orderId/items", async (req, res) => {
   });
 
   res.json(orderItem);
+});
+
+app.get('/', async (req, res) => {
+    const { store_id } = res.locals.store;
+  const { customer_id } = res.locals.customer;
+
+    const orders = await OrderModel.findAll({
+        where: { store_id,customer_id },
+    });
+
+    res.json(orders);
 });
 
 // Endpoint to remove items from an order

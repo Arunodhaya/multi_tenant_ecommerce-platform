@@ -3,6 +3,7 @@ import { CustomerModel } from "../model/CustomerModel";
 import { StoreModel } from "../model/StoreModel";
 import bcrypt from "bcrypt";
 import { generateCustomerToken } from "../helpers/authHelper";
+import { validateCustomer } from "../middleware";
 
 const app = express.Router();
 
@@ -73,5 +74,30 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.put("/:customerId",validateCustomer,async (req,res)=>{
+  const customer_id = req.params.customerId;
+  const { store_id } = res.locals.store;
 
+  const { name, phone, email, password } = req.body;
+
+  const customer = await CustomerModel.findOne({where:{
+    customer_id,store_id
+  }});
+
+  if (!customer) {
+    return res.status(404).json({ error: 'Customer not found' });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  customer.name = name;
+  customer.phone = phone;
+  customer.email = email;
+  customer.store_id = store_id;
+  customer.password = hashedPassword;
+
+  await customer.save();
+
+  return res.status(200).json({ message: 'Customer updated successfully', customer });
+})
 export default app;

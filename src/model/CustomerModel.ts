@@ -10,7 +10,6 @@ import {
     ForeignKey,
   } from "sequelize-typescript";
   import { sequelize } from "./db-config";
-import { StoreModel } from "./StoreModel";
   
   @Table({
     tableName: "customers",
