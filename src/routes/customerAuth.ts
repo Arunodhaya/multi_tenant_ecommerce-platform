@@ -1,5 +1,4 @@
 import express from "express";
-import { authenticateToken } from "../middleware";
 import { CustomerModel } from "../model/CustomerModel";
 import { StoreModel } from "../model/StoreModel";
 import bcrypt from "bcrypt";

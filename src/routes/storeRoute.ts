@@ -2,9 +2,9 @@ import express from "express";
 import bcrypt from "bcrypt";
 import { StoreModel } from "../model/StoreModel";
 import {
-  authenticateStoreOwner,
+  validateStore,
   validateAuthToken,
-  validateStoreOwner,
+  validateStoreAccess,
 } from "../middleware";
 import { UserModel } from "../model/UserModel";
 import { RoleModel } from "../model/RoleModel";
@@ -40,7 +40,7 @@ app.get("/:id", validateAuthToken, async (req, res) => {
   const { user } = res.locals;
   let store_id = req.params.id;
 
-  let is_owner = await validateStoreOwner(store_id, user.user_id);
+  let is_owner = await validateStoreAccess(store_id, user.user_id);
   if (!is_owner)
     return res
       .status(401)
@@ -51,14 +51,14 @@ app.get("/:id", validateAuthToken, async (req, res) => {
     res.status(404).json({ error: "Store not found" });
     return;
   }
-  res.json(store);
+  return res.json(store);
 });
 
 app.put("/:id", validateAuthToken, async (req, res) => {
   const { user } = res.locals;
   let store_id = req.params.id;
 
-  let is_owner = await validateStoreOwner(store_id, user.user_id);
+  let is_owner = await validateStoreAccess(store_id, user.user_id);
   if (!is_owner)
     return res
       .status(401)
@@ -77,7 +77,7 @@ app.delete("/stores/:id", async (req, res) => {
   const { user } = res.locals;
   let store_id = req.params.id;
 
-  let is_owner = await validateStoreOwner(store_id, user.user_id);
+  let is_owner = await validateStoreAccess(store_id, user.user_id);
   if (!is_owner)
     return res
       .status(401)

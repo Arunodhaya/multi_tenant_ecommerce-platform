@@ -2,7 +2,7 @@ import { Table, Column, Model, HasMany, CreatedAt, UpdatedAt, PrimaryKey, AutoIn
 import { sequelize } from './db-config';
 
 
-type Roles = 'STORE_OWNER'|'ADMIN'
+export type Roles = 'STORE_OWNER'|'ADMIN'
 @Table({
     tableName: 'roles'
 })
