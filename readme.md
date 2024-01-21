@@ -36,7 +36,7 @@ This is a Node.js application that provides multi-tenant e-commerce platform tha
 
 ## API Documentation
 
-Please refer to the [API documentation](https://github.com/Arunodhaya/multi_tenant_ecommerce-platform/blob/master/api_docs.md) for detailed information on the available endpoints and their usage.
+Please refer to the [API documentation](https://documenter.getpostman.com/view/23123555/2s9YymFPsS) for detailed information on the available endpoints and their usage.
 
 ## Postman Dump
 
