@@ -112,6 +112,7 @@ export const validateCustomer = async (
           "Access denied! You don't have permission to perform this action"
         );
     res.locals.customer = loggedInCustomer;
+    res.locals.store = store;
     next();
   });
 };
