@@ -7,6 +7,7 @@ import StoreRoutes from '../src/routes/storeRoute'
 import ProductCategoryRoutes from '../src/routes/productCategoryRoutes'
 import ProductRoutes from '../src/routes/productRoutes'
 import CustomerOrderWorkFlowRoutes from '../src/routes/customerOrderWorkFlowRoutes'
+import AdminUserRoutes from '../src/routes/adminCustomerRoutes'
 
 
 dotenv.config({ path: __dirname + "/../.env.local" });
@@ -26,6 +27,7 @@ app.use('/admin/auth',AuthRoutes)
 app.use('/admin/store',StoreRoutes)
 app.use('/admin/product/product_categories',ProductCategoryRoutes)
 app.use('/admin/product',ProductRoutes)
+app.use('/admin/user',AdminUserRoutes)
 
 app.use('/customer/auth',CustomerRoutes)
 app.use('/customer/orders',CustomerOrderWorkFlowRoutes)

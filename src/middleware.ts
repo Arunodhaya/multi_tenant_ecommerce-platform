@@ -7,6 +7,7 @@ import { CustomerModel } from "./model/CustomerModel";
 import { RoleModel, Roles } from "./model/RoleModel";
 import { UserRolesModel } from "./model/UserRolesModel";
 import { Op, where } from "sequelize";
+import { UserModel } from "./model/UserModel";
 
 dotenv.config({ path: __dirname + "/../.env.local" });
 dotenv.config({ path: __dirname + "/../.env" });
@@ -66,6 +67,9 @@ export const validateStore = async (
   const user = res.locals.user;
   if (!user) return res.status(401).send("You have not logged-in");
 
+  const owner = await UserModel.findByPk(user.user_id)
+  if(!owner) 
+  return res.status(403).send("You are not owner of this store");
   const store_id = req.headers.store_id;
 
   if (!store_id) return res.status(403).send("Include store_id in the header!");
