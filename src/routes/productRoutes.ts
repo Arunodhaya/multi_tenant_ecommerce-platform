@@ -1,6 +1,7 @@
 import express from 'express';
 import { validateAuthToken, validateStore } from '../middleware';
 import { ProductModel } from '../model/ProductModel';
+import { Op } from 'sequelize';
 
 const router = express.Router();
 
@@ -57,7 +58,31 @@ router.put('/:product_id', validateAuthToken, validateStore, async (req, res) =>
 router.get('/', validateAuthToken, validateStore, async (req, res) => {
     const { store_id } = res.locals.store;
 
-    const products = await ProductModel.findAll({ where: { store_id } });
+    const { category, priceMin, priceMax, q } = req.query as any;
+
+    const whereCondition: any = { store_id };
+
+    if (category) {
+        whereCondition.product_category_id = category;
+    }
+
+    if (priceMin && !isNaN(parseFloat(priceMin))) {
+        whereCondition.price = { [Op.gte]: parseFloat(priceMin) };
+    }
+
+    if (priceMax && !isNaN(parseFloat(priceMax))) {
+        whereCondition.price = {
+            ...whereCondition.price,
+            [Op.lte]: parseFloat(priceMax),
+        };
+    }
+
+    if (q) {
+        whereCondition.name = { [Op.like]: `%${q}%` };
+    }
+
+
+    const products = await ProductModel.findAll({ where: whereCondition });
 
     res.json(products);
 });
