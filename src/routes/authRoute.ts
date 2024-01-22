@@ -68,7 +68,7 @@ app.post("/login", async (req, res) => {
 
 app.get("/user_info", validateAuthToken, async (req, res) => {
   try {
-    const userId = req.body.user.user_id;
+    const userId = res.locals.user.user_id;
 
     const user = await UserModel.findByPk(userId);
 
